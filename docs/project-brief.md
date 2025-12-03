@@ -38,7 +38,8 @@ A comprehensive certification preparation platform that combines flexible practi
 
 - Google SSO integration using work Gmail accounts
 - Secure session management
-- Role: Individual user (no admin/manager roles in MVP)
+- Two roles: Individual user and Admin
+- Admin role assignment based on email whitelist or manual promotion
 
 **User Onboarding:**
 
@@ -171,7 +172,58 @@ Two distinct practice experiences catering to different learning needs:
 - Quick access to review difficult questions
 - Ability to practice only bookmarked questions
 
-### 5. Question Generation & Content System
+### 5. Admin Dashboard
+
+**Purpose:** Central management interface for platform administrators to create and manage certifications
+
+**Certification Management:**
+
+- **Create New Certification:**
+  - Select cloud provider (AWS/Azure/GCP/Snowflake)
+  - Enter certification name (e.g., "AWS Solutions Architect Associate")
+  - Define exam parameters:
+    - Total number of questions
+    - Time limit (in minutes)
+    - Passing score percentage
+  - Add certification description/details
+  - Set certification as active/inactive
+
+- **Define Exam Domains/Topics:**
+  - Add topics for each certification (e.g., "Security & Compliance", "Networking", "Compute")
+  - Set topic weight/percentage (how much of exam covers this topic)
+  - Add topic descriptions and key concepts
+  - Organize topics in hierarchical structure if needed
+
+- **Manage Existing Certifications:**
+  - View list of all certifications in system
+  - Edit certification details and parameters
+  - Update exam domains/topics
+  - Archive/deactivate outdated certifications
+  - View usage statistics (number of users studying each cert)
+
+**Question Management:**
+
+- View questions by certification and topic
+- Review flagged/reported questions from users
+- Edit or remove low-quality questions
+- View question ratings and user feedback
+- Manually add curated questions
+- Approve AI-generated questions before they go live (optional quality gate)
+
+**User Management:**
+
+- View list of all registered users
+- See which certifications users are studying
+- Promote users to admin role
+- View aggregate platform statistics (total users, questions answered, etc.)
+
+**Access Control:**
+
+- Admin dashboard only accessible to users with admin role
+- Regular users cannot access admin features
+- Admin role required for certification creation/modification
+
+### 6. Question Generation & Content System
 
 **Question Sources:**
 
@@ -222,10 +274,12 @@ Two distinct practice experiences catering to different learning needs:
 
 ### Data Requirements
 
-- User profiles and authentication data
+- User profiles and authentication data (including admin role assignments)
+- Certification definitions (providers, exams, parameters, topics/domains)
 - Question bank (versioned and updatable)
 - User progress data (answers, scores, bookmarks)
 - Analytics data (performance by topic, time spent)
+- Question quality data (user ratings, reports, admin reviews)
 
 ## User Flows
 
@@ -268,6 +322,23 @@ Two distinct practice experiences catering to different learning needs:
 3. Identifies weak topic area
 4. Clicks topic to see detailed breakdown
 5. Navigates to Topic-Specific Practice for that area
+
+### Admin User Flow: Creating a New Certification
+
+1. Admin logs in with Google SSO
+2. Navigates to Admin Dashboard
+3. Clicks "Create New Certification"
+4. Selects cloud provider from dropdown (AWS/Azure/GCP/Snowflake)
+5. Enters certification name and description
+6. Sets exam parameters (question count, time limit, passing score)
+7. Clicks "Next" to define topics/domains
+8. Adds each exam domain with:
+   - Topic name
+   - Topic weight/percentage
+   - Topic description
+9. Reviews and saves certification
+10. Certification becomes available in user onboarding flow
+11. Admin can initiate question generation for new certification
 
 ## Success Metrics
 
@@ -318,10 +389,12 @@ The following features are explicitly out of scope for MVP but documented for fu
 
 ### Advanced Analytics
 
+- Enhanced admin dashboard with detailed user performance analytics
 - Manager dashboard (with appropriate privacy controls)
 - Team-level certification tracking
 - ROI analysis (certifications vs project opportunities)
 - Predictive analytics for exam success
+- Question effectiveness analytics (which questions best predict exam success)
 
 ### Content Enhancements
 
@@ -336,6 +409,15 @@ The following features are explicitly out of scope for MVP but documented for fu
 - Non-cloud certifications (security, project management, etc.)
 - Integration with company LMS or HR systems
 - API for third-party integrations
+
+### Enhanced Admin Features
+
+- Bulk question import/export functionality
+- A/B testing for question variations
+- Automated question difficulty calibration based on user performance
+- Admin roles with granular permissions (content manager, user manager, super admin)
+- Certification versioning (manage multiple versions of same cert as exam blueprints change)
+- Question duplication detection and merging tools
 
 ## Open Questions & Decisions Needed
 
@@ -356,6 +438,7 @@ The following features are explicitly out of scope for MVP but documented for fu
 - **AI chat implementation:** Which LLM/AI service for follow-up questions?
 - **Hosting & infrastructure:** Cloud provider preference for hosting the app itself?
 - **Database strategy:** Relational vs NoSQL for user data and question bank?
+- **Admin role assignment:** Email whitelist, manual promotion by existing admins, or both?
 
 ### Rollout Strategy
 
@@ -367,16 +450,17 @@ The following features are explicitly out of scope for MVP but documented for fu
 
 ### Scope Constraints
 
-- MVP focuses on individual user experience only
-- No manager/admin visibility or reporting
+- MVP focuses on individual user experience with basic admin functionality for certification management
+- Admin dashboard limited to certification and question management (no team reporting or analytics)
 - No integration with external systems
 - Internal use only (not a commercial product)
 
 ### Privacy Constraints
 
 - All user data remains private to the individual
-- No cross-user data sharing or aggregation
-- No visibility for managers or team leads
+- Admin users can view aggregate platform statistics and user lists (for management purposes only)
+- No detailed individual performance data visible to admins unless required for question quality review
+- No cross-user data sharing between regular users
 - Compliant with company data policies
 
 ### Resource Constraints
