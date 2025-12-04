@@ -107,6 +107,16 @@ devo-cert-prep/
 
 ## Development Guidelines
 
+### Git Workflow
+- **NEVER commit or push changes without explicit user approval**
+- Always ask the user before running `git commit` or `git push`
+- Present the changes and wait for confirmation before committing
+
+### Port Management
+- **NEVER change ports in docker-compose.yml or other config files if a port is busy**
+- Instead, ask the user to kill the process using the busy port
+- Only change ports if the user explicitly requests it
+
 ### Code Style
 - **Backend:** Follow FastAPI best practices, type hints everywhere, Ruff for linting
 - **Frontend:** TypeScript strict mode, ESLint + Prettier, consistent CSS naming (BEM)
