@@ -8,7 +8,7 @@ services:
       POSTGRES_USER: devuser
       POSTGRES_PASSWORD: devpassword
     ports:
-      - "5433:5432"
+      - "5434:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -27,7 +27,7 @@ services:
     volumes:
       - ./backend:/app
     ports:
-      - "8000:8000"
+      - "8001:8000"
     environment:
       DATABASE_URL: postgresql://devuser:devpassword@db:5432/devo_cert_prep
       AWS_REGION: us-east-1
@@ -48,9 +48,9 @@ services:
       - ./frontend:/app
       - /app/node_modules
     ports:
-      - "3000:3000"
+      - "3001:3000"
     environment:
-      NUXT_PUBLIC_API_BASE_URL: http://localhost:8000
+      NUXT_PUBLIC_API_BASE_URL: http://localhost:8001
     depends_on:
       - backend
 

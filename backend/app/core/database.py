@@ -4,6 +4,17 @@ from sqlmodel import SQLModel, create_engine, Session
 from typing import Generator
 from app.core.config import settings
 
+# Import all models to ensure they are registered with SQLModel
+from app.models import (  # noqa: F401
+    User,
+    Certification,
+    Topic,
+    Question,
+    UserProgress,
+    Session as SessionModel,
+    Bookmark,
+)
+
 # Create database engine
 engine = create_engine(
     settings.DATABASE_URL,
