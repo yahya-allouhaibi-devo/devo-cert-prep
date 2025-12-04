@@ -9,6 +9,7 @@ dependencies = [
     "uvicorn[standard]",
     "sqlmodel",
     "pydantic",
+    "pydantic-settings",
     "psycopg2-binary",
     "alembic",
     "python-jose[cryptography]",
